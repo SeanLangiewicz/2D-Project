@@ -10,9 +10,10 @@ public class healthSystem : MonoBehaviour
    public float currentHealth;
   // public float maxHealth { get; set; }
    //public float currentHealth { get; set; }
-    public Slider healthSlider;
+   public Slider healthSlider;
 
     private float calculatedHealth;
+
 
     public float damage;
 
@@ -20,31 +21,39 @@ public class healthSystem : MonoBehaviour
 
     void Start()
     {
-        //maxHealth = 20f;
-        currentHealth = maxHealth;
-        Debug.Log(currentHealth + "is the current health");
-       // healthSlider.value = CalculateHealth();
+        currentHealth = maxHealth;  
+        healthSlider.value = maxHealth;
+        
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
-            DealDamage(5);
+           
+        DealDamage();
        
 
     }
 
 
-    void DealDamage(float damage)
+    float DealDamage()
     {
         currentHealth -= damage;
-        healthSlider.value = CalculateHealth();
-        Debug.Log(damage + "Damage Done");
+        
+        CalculateHealth();
+        SliderCalculation();
+        
 
         if (currentHealth <= 0)
         {
             Die();
         }
+        return damage;
+    }
+
+    private void SliderCalculation()
+    {
+        healthSlider.value = CalculateHealth();
     }
 
     private void Die()
@@ -55,14 +64,8 @@ public class healthSystem : MonoBehaviour
 
     float CalculateHealth()
     {
-       
-      
-        calculatedHealth = (float)currentHealth / maxHealth;
-
-        Debug.Log("Current Health" + currentHealth);
-        Debug.Log("Max health" + maxHealth);
-        Debug.Log("Calc health" + calculatedHealth);
-
+        calculatedHealth = (currentHealth / maxHealth)*100;
+    
         return calculatedHealth;
         
     }
